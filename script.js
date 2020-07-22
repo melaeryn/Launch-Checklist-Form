@@ -33,7 +33,9 @@ window.addEventListener("load", function() {
    //validation step: submit checks to make sure that everything has been entered and that it is correct value type.
    button.addEventListener("submit", function(event){
       //if they didn't enter a value for something, inform them all fields are required.
-      if(pilotName.value === "" || copilotName.value === "" || fuelLevel === "" || cargoMass === "" ){
+      let updateflag = true;
+      if(pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "" ){
+         updateflag = false;
          alert("All inputs are required!");
          event.preventDefault();
       }
@@ -41,10 +43,15 @@ window.addEventListener("load", function() {
       //if something they entered isn't a valid input, tell them that valid inputs are required.
      else if(typeof(pilotName.value) != "string" || typeof(copilotName.value) != "string" 
       || isNaN(fuelLevel.value) || isNaN(cargoMass.value) || !isNaN(pilotName.value) || !isNaN(copilotName.value) ){
+        updateflag = false;
          alert("valid inputs only!");
          event.preventDefault();
       } 
+      else{
+         updateflag = true;
+      }
       
+      if(updateflag === true){
       event.preventDefault();
          //update pilot names in the list of messed up items.
       document.getElementById("pilotStatus").innerHTML = `Pilot ${pilotName.value} is ready.`;
@@ -88,7 +95,8 @@ window.addEventListener("load", function() {
          launchStatus.innerHTML = "Shuttle ready for takeoff!";
          launchStatus.style.color = "green";
          document.getElementById("faultyItems").style.visibility = "hidden";
-      }     
+      }  
+   }   
    });
 });
 
